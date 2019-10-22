@@ -39,8 +39,12 @@ EOF
 # (roles, profiles, hieradata and all component modules)
 r10k deploy environment -p
 
-# if additional first time scripts needed, e.g. do
+# copy global Hiera config in place (this is needed because its only
+# in the global Hiera config it is allowed to use absolute path in datadir)
 cd /etc/puppetlabs/code/environments/production/ || exit
+cp global_hiera.yaml /etc/puppetlabs/puppet/hiera.yaml
+
+# if additional first time scripts needed, e.g. do
 bash ./new_keys_and_passwds.bash
 #
 # only needed for now is some module "hacks"
