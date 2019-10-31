@@ -5,7 +5,7 @@ tempdeb=$(mktemp /tmp/debpackage.XXXXXXXXXXXXXXXXXX) || exit 1
 wget -O "$tempdeb" https://apt.puppetlabs.com/puppet6-release-bionic.deb
 dpkg -i "$tempdeb"
 apt-get update
-apt-get -y install puppetserver git
+apt-get -y install puppetserver git pwgen
 /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped enable=true
 /opt/puppetlabs/bin/puppet resource service puppetserver ensure=stopped enable=true
 
