@@ -3,7 +3,7 @@ Set-ExecutionPolicy RemoteSigned -Force
 Install-PackageProvider nuget -Force
 Install-Module PSWindowsUpdate -Force
 if ( (Get-WUList | Measure-Object).Count -gt 0) {
-  Get-WUInstall -Install -AcceptAll
+  Get-WUInstall -Install -AcceptAll -IgnoreReboot
   exit 1003 # 1003 - reboot and run the plugin again on next boot
 } else {
   $puppet_agent_msi_url = "https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x64-latest.msi"
