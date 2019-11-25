@@ -1,10 +1,24 @@
 #ps1_sysnative
+#
+# Windows 10 doesn't set hostname correctly
+#
+$name = (New-Object System.Net.WebClient).DownloadString("http://169.254.169.254/latest/meta-data/hostname")
+$shortname = $name.split('.',2)[0]
+if ( $env:computername -ne $shortname ) {
+  Rename-Computer $shortname
+  exit 1003 # 1003 - reboot and run the plugin again on next boot
+            # https://cloudbase-init.readthedocs.io/en/latest/tutorial.html#file-execution
+}
+#
+# Install all updates (and reboot as much as needed) before installing 
+# Puppet (fixes the problem with installing the Puppet service)
+#
 Set-ExecutionPolicy RemoteSigned -Force
 Install-PackageProvider nuget -Force
 Install-Module PSWindowsUpdate -Force
 if ( (Get-WUList | Measure-Object).Count -gt 0) {
   Get-WUInstall -Install -AcceptAll -IgnoreReboot
-  exit 1003 # 1003 - reboot and run the plugin again on next boot
+  exit 1003
 } else {
   $puppet_agent_msi_url = "https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x64-latest.msi"
   $puppet_agent_msi_path = Join-Path $ENV:TEMP puppet_agent.msi
