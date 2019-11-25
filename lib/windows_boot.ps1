@@ -1,4 +1,8 @@
 #ps1_sysnative
+Set-ExecutionPolicy RemoteSigned -Force
+Install-PackageProvider nuget -Force
+Install-Module PSWindowsUpdate -Force
+Get-WUInstall -Install -AutoReboot -AcceptAll
 $puppet_agent_msi_url = "https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x64-latest.msi"
 $puppet_agent_msi_path = Join-Path $ENV:TEMP puppet_agent.msi
 $ErrorActionPreference = "Stop"
