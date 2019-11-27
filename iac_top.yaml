@@ -14,7 +14,7 @@ parameters:
   image_windows:
     type: string
     description: Name of image to use for Windows servers
-    default: Windows Server 2019 Standard [Evaluation]
+    default: Windows 10 1909 Pro for Workstations [Unlicensed]
   sec_group_linux:
     type: comma_delimited_list
     description: Security groups
