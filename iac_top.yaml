@@ -11,18 +11,14 @@ parameters:
     type: string
     description: Name of image to use for GNU/Linux servers
     default: Ubuntu Server 18.04 LTS (Bionic Beaver) amd64
-  image_windows:
+  image_windows_server:
     type: string
     description: Name of image to use for Windows servers
-    default: Windows 10 1909 Pro for Workstations [Unlicensed]
-  sec_group_linux:
-    type: comma_delimited_list
-    description: Security groups
-    default: default,linux
-  sec_group_windows:
-    type: comma_delimited_list
-    description: Security groups
-    default: default,windows
+    default: Windows Server 2019 Standard [Evaluation]
+  image_windows_client:
+    type: string
+    description: Name of image to use for Windows servers
+    default: Windows 10 1909 Enterprise [Evaluation]
   public_net:
     type: string
     description: >
@@ -34,24 +30,95 @@ resources:
   iac_base:
     type: iac_base.yaml
     properties:
-      key_name:          { get_param: key_name }
-      image_linux:       { get_param: image_linux }  
-      public_net:        { get_param: public_net }  
-      sec_group_linux:   { get_param: sec_group_linux }  
+      key_name:          { get_param:    key_name }
+      image_linux:       { get_param:    image_linux }  
+      public_net:        { get_param:    public_net }  
+      sec_group_linux:   { get_resource: sec_group_linux }  
 
   iac_rest:
     type: iac_rest.yaml
     depends_on: iac_base
     properties:
-      key_name:          { get_param: key_name }
-      image_linux:       { get_param: image_linux }  
-      image_windows:     { get_param: image_windows }  
-      sec_group_linux:   { get_param: sec_group_linux }  
-      sec_group_windows: { get_param: sec_group_windows }
-      public_net:        { get_param: public_net }  
-      admin_net:         { get_attr: [iac_base,admin_net] }
-      admin_subnet:      { get_attr: [iac_base,admin_subnet] }
-      manager_ip:        { get_attr: [iac_base,manager_ip] }
+      key_name:                 { get_param:    key_name }
+      image_linux:              { get_param:    image_linux }  
+      image_windows_server:     { get_param:    image_windows_server }  
+      image_windows_client:     { get_param:    image_windows_client }  
+      sec_group_linux:          { get_resource: sec_group_linux }  
+      sec_group_windows_server: { get_resource: sec_group_windows_server }
+      sec_group_windows_client: { get_resource: sec_group_windows_client }
+      public_net:               { get_param:    public_net }  
+      admin_net:                { get_attr:     [iac_base,admin_net] }
+      admin_subnet:             { get_attr:     [iac_base,admin_subnet] }
+      manager_ip:               { get_attr:     [iac_base,manager_ip] }
+
+  sec_group_linux:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Linux server
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 22
+          port_range_max: 22
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+
+  sec_group_windows_server:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Windows server
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 3389
+          port_range_max: 3389
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 5985
+          port_range_max: 5986
+
+  sec_group_windows_client:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for Windows client
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 443
+          port_range_max: 443
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 3389
+          port_range_max: 3389
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 5985
+          port_range_max: 5986
+
 
 outputs:
   manager_ip:
