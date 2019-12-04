@@ -33,7 +33,7 @@ resources:
       key_name:          { get_param:    key_name }
       image_linux:       { get_param:    image_linux }  
       public_net:        { get_param:    public_net }  
-      sec_group_linux:   { get_resource: sec_group_linux }  
+      sec_group_linux:   default, { get_resource: sec_group_linux } 
 
   iac_rest:
     type: iac_rest.yaml
@@ -43,9 +43,9 @@ resources:
       image_linux:              { get_param:    image_linux }  
       image_windows_server:     { get_param:    image_windows_server }  
       image_windows_client:     { get_param:    image_windows_client }  
-      sec_group_linux:          { get_resource: sec_group_linux }  
-      sec_group_windows_server: { get_resource: sec_group_windows_server }
-      sec_group_windows_client: { get_resource: sec_group_windows_client }
+      sec_group_linux:          default, { get_resource: sec_group_linux }  
+      sec_group_windows_server: default, { get_resource: sec_group_windows_server }
+      sec_group_windows_client: default, { get_resource: sec_group_windows_client }
       public_net:               { get_param:    public_net }  
       admin_net:                { get_attr:     [iac_base,admin_net] }
       admin_subnet:             { get_attr:     [iac_base,admin_subnet] }
