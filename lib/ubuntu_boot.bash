@@ -1,4 +1,11 @@
 #!/bin/bash -v
+
+# upgrade
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get -o "Dpkg::Options::=--force-confold" dist-upgrade -y --force-yes
+
+# install Puppet agent
 tempdeb=$(mktemp /tmp/debpackage.XXXXXXXXXXXXXXXXXX) || exit 1
 wget -O "$tempdeb" https://apt.puppetlabs.com/puppet6-release-bionic.deb
 dpkg -i "$tempdeb"
