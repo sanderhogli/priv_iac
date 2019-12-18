@@ -13,13 +13,13 @@ if ( $env:computername -ne $shortname ) {
 # Install all updates (and reboot as much as needed) before installing 
 # Puppet (fixes the problem with installing the Puppet service)
 #
-#Set-ExecutionPolicy RemoteSigned -Force
-#Install-PackageProvider nuget -Force
-#Install-Module PSWindowsUpdate -Force
-#if ( (Get-WUList | Measure-Object).Count -gt 0) {
-#  Get-WUInstall -Install -AcceptAll -IgnoreReboot
-#  exit 1003
-#} else {
+Set-ExecutionPolicy RemoteSigned -Force
+Install-PackageProvider nuget -Force
+Install-Module PSWindowsUpdate -Force
+if ( (Get-WUList | Measure-Object).Count -gt 0) {
+  Get-WUInstall -Install -AcceptAll -IgnoreReboot
+  exit 1003
+} else {
   $puppet_agent_msi_url = "https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x64-latest.msi"
   $puppet_agent_msi_path = Join-Path $ENV:TEMP puppet_agent.msi
   $ErrorActionPreference = "Stop"
@@ -35,4 +35,4 @@ if ( $env:computername -ne $shortname ) {
   & "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" config set runinterval 300 --section main
   & "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" agent -t
   & "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat" resource service puppet ensure=running enable=true
-#}
+}
