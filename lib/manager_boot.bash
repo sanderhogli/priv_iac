@@ -12,7 +12,6 @@ i=0;
 wget -O "$tempdeb" https://apt.puppetlabs.com/puppet6-release-bionic.deb
 ret="$?"
 while [ "$i" -lt "5" ] && [ "$ret" -ne "0" ]; do
-  sleep 10
   wget -O "$tempdeb" https://apt.puppetlabs.com/puppet6-release-bionic.deb
   ret="$?"
   let "i++"
