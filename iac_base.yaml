@@ -84,6 +84,7 @@ resources:
       key_name: { get_param: key_name }
       networks:
         - port: { get_resource: manager_port }
+      user_data_format: RAW
       user_data: { get_file: lib/manager_boot.bash }
 
   manager_port:
