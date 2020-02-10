@@ -63,19 +63,53 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Common rules for iac VMs. Allows any traffic between any VM in this security group.
-  sec_group_rule_iac_common_in4:
+  sec_group_rule_iac_common_in4_icmp:
     type: OS::Neutron::SecurityGroupRule
     properties:
       security_group: { get_resource: sec_group_iac_common }
       direction: ingress
       ethertype: IPv4
+      protocol: icmp
       remote_group: { get_resource: sec_group_iac_common }
-  sec_group_rule_iac_common_in6:
+  sec_group_rule_iac_common_in6_icmp:
     type: OS::Neutron::SecurityGroupRule
     properties:
       security_group: { get_resource: sec_group_iac_common }
       direction: ingress
       ethertype: IPv6
+      protocol: icmp
+      remote_group:   { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in4_tcp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv4
+      protocol: tcp
+      remote_group: { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in6_tcp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv6
+      protocol: tcp
+      remote_group:   { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in4_udp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv4
+      protocol: udp
+      remote_group: { get_resource: sec_group_iac_common }
+  sec_group_rule_iac_common_in6_udp:
+    type: OS::Neutron::SecurityGroupRule
+    properties:
+      security_group: { get_resource: sec_group_iac_common }
+      direction: ingress
+      ethertype: IPv6
+      protocol: udp
       remote_group:   { get_resource: sec_group_iac_common }
   sec_group_rule_iac_common_out4:
     type: OS::Neutron::SecurityGroupRule
@@ -83,14 +117,14 @@ resources:
       security_group: { get_resource: sec_group_iac_common }
       direction: egress
       ethertype: IPv4
-      remote_group:   { get_resource: sec_group_iac_common }
+      remote_ip_prefix: 0.0.0.0/0
   sec_group_rule_iac_common_out6:
     type: OS::Neutron::SecurityGroupRule
     properties:
       security_group: { get_resource: sec_group_iac_common }
       direction: egress
       ethertype: IPv6
-      remote_group:   { get_resource: sec_group_iac_common }
+      remote_ip_prefix: ::/0
 
   sec_group_linux:
     type: OS::Neutron::SecurityGroup
