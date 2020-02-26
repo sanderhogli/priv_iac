@@ -92,7 +92,7 @@ resources:
           admin_subnet:      { get_param: admin_subnet }
           manager_ip:        { get_param: manager_ip }
   srv1:
-    type: lib/managed_windows_server.yaml
+    type: lib/managed_windows_server_two_vols.yaml
     properties:
           key_name:          { get_param: key_name }
           server_name:       srv1
@@ -105,7 +105,7 @@ resources:
           manager_ip:        { get_param: manager_ip }
 
   srv2:
-    type: lib/managed_windows_server.yaml
+    type: lib/managed_windows_server_two_vols.yaml
     properties:
           key_name:          { get_param: key_name }
           server_name:       srv2
