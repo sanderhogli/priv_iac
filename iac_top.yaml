@@ -18,7 +18,7 @@ parameters:
   image_windows_client:
     type: string
     description: Name of image to use for Windows servers
-    default: Windows 10 1909 Enterprise [Evaluation]
+    default: Windows 10 2004 Enterprise [Evaluation]
   public_net:
     type: string
     description: >
