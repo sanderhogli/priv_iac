@@ -33,9 +33,6 @@ parameters:
   manager_ip:
     type: string
     description: IP address of server manager created in base template
-  database_ip:
-    type: string
-    description: IP address of server db created in base template
 
 resources:
 
