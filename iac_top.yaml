@@ -264,6 +264,3 @@ outputs:
   manager_ip:
     description: IP address of manager in the admin network
     value: { get_attr: [iac_base,manager_ip] }
-  database_ip:
-    description: IP address of db in the admin network
-    value: { get_attr: [iac_rest,database_ip] }
