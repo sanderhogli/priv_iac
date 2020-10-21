@@ -53,7 +53,7 @@ resources:
         str_replace:
           template: { get_file: ubuntu_boot.bash }
           params:
-            database_ip_address: { get_param: database_ip }
+            manager_ip_address: { get_param: manager_ip }
 
   server_port_admin:
     type: OS::Neutron::Port
