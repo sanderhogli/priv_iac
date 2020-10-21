@@ -26,6 +26,9 @@ echo "manager_ip_address manager.node.consul manager" >> /etc/hosts
 /opt/puppetlabs/bin/puppet config set server manager.node.consul --section main
 /opt/puppetlabs/bin/puppet config set runinterval 300 --section main
 /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
-/opt/puppetlabs/bin/puppet agent -t
-/opt/puppetlabs/bin/puppet agent -t
+/opt/puppetlabs/bin/puppet agent -t # request certificate
+/opt/puppetlabs/bin/puppet agent -t # configure manager
+if [ "$HOSTNAME" = wp ]; then
+  echo "$(consul members | grep db | awk '{print $2}' | cut -d ":" -f 1)" db.node.consul db >> /etc/hosts
+fi
 
