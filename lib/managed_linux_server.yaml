@@ -33,6 +33,9 @@ parameters:
   manager_ip:
     type: string
     description: IP address of server manager created in base template
+  database_ip:
+    type: string
+    description: IP address of server db created in base template
 
 resources:
 
@@ -51,6 +54,7 @@ resources:
           template: { get_file: ubuntu_boot.bash }
           params:
             manager_ip_address: { get_param: manager_ip }
+            database_ip_address: { get_param: database_ip }
 
   server_port_admin:
     type: OS::Neutron::Port
