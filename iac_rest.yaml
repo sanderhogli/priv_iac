@@ -107,6 +107,6 @@ resources:
             manager_ip:        { get_param: manager_ip }
 
 outputs:
-  database_1:
+  database_ip:
     description: IP address of db in provider network
     value: { get_attr: [ db, first_address ] }
