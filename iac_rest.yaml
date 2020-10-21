@@ -105,3 +105,8 @@ resources:
             admin_net:         { get_param: admin_net }
             admin_subnet:      { get_param: admin_subnet }
             manager_ip:        { get_param: manager_ip }
+
+outputs:
+  database_1:
+    description: IP address of db in provider network
+    value: { get_attr: [ db, first_address ] }
