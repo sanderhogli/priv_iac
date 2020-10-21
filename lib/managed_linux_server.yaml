@@ -65,6 +65,3 @@ resources:
     properties:
       floating_network: { get_param: public_net }
       port_id: { get_resource: server_port_admin }
-outputs:
- database_ip:
-    value: { get_attr: [get_param: server_name, networks, get_param: admin_subnet, 0]}
