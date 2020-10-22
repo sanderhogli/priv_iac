@@ -53,6 +53,7 @@ parameters:
       - 22
       - 80
       - 443
+      - 8000
  
 resources:
   # Parsing port parameters into lists that repeat can iterate over:
