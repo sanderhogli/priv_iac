@@ -71,7 +71,7 @@ resources:
       type: lib/managed_linux_server.yaml
       properties:
             key_name:          { get_param: key_name }
-            server_name:       wp
+            server_name:       db
             image:             { get_param: image_linux }  
             flavor:            m1.medium
             sec_group_linux:   { get_param: sec_group_linux }  
