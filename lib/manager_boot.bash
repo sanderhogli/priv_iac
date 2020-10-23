@@ -74,3 +74,4 @@ mv puppet-dns dns
 /opt/puppetlabs/bin/puppet agent -t # request certificate
 /opt/puppetlabs/bin/puppet agent -t # configure manager
 /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
+bash ./swarm_token.bash
