@@ -67,7 +67,7 @@ resources:
           admin_subnet:      { get_param: admin_subnet }
           manager_ip:        { get_param: manager_ip }
             
-  wp:
+  db:
       type: lib/managed_linux_server.yaml
       properties:
             key_name:          { get_param: key_name }
