@@ -17,7 +17,7 @@ if [ "$ret" -ne "0" ]; then # All attempts to download file failed, instruct clo
   exit 1003
 fi
 
- 
+
 dpkg -i "$tempdeb"
 apt-get update
 apt-get -y install puppetserver git pwgen
@@ -41,7 +41,7 @@ cat <<EOF > /var/tmp/r10k.pp
 class { 'r10k':
   sources => {
     'puppet' => {
-      'remote'  => 'https://github.com/Monastyr/control-repo.git',
+      'remote'  => 'https://github.com/sanderhogli/control-repo-1.git',
       'basedir' => '/etc/puppetlabs/code/environments',
       'prefix'  => false,
     },
